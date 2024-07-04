@@ -18,9 +18,14 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->intended(route('categories.index'));
+            return redirect()->intended('/admin/dashboard');
         }
 
         return redirect()->back()->withErrors(['email' => 'Invalid credentials.']);
+    }
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
     }
 }

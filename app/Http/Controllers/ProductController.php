@@ -9,7 +9,7 @@ use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
 {
-   
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
