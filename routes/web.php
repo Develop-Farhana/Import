@@ -41,7 +41,7 @@ Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->
 
 // Products routes
 Route::get('products', [ProductController::class, 'index'])->name('products.index');
-Route::post('products', [ProductController::class, 'store'])->name('products.store');
-Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
-Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::get('products/{product}', [ProductController::class, 'edit'])->name('products.edit'); // For fetching product details
+Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update'); // For updating product details
+Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy'); // For deleting a product
+
