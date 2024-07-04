@@ -6,12 +6,14 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-
+use Auth;
 class ProductController extends Controller
 {
 
     public function index(Request $request)
     {
+        if(Auth::check())
+        {
         if ($request->ajax()) {
             $data = Product::with('category')->get();
             return Datatables::of($data)
@@ -28,7 +30,8 @@ class ProductController extends Controller
         $categories = Category::all();
         return view('products.index', compact('categories'));
     }
-
+    return redirect('login')->with('success', 'you are not allowed to access');
+}
     public function create()
     {
         $categories = Category::all();

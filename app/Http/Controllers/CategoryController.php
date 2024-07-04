@@ -7,7 +7,7 @@ use App\Models\Category;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CategoriesImport;
 use Yajra\DataTables\Facades\DataTables;
-
+use Auth;
 class CategoryController extends Controller
 {
 
@@ -15,9 +15,12 @@ class CategoryController extends Controller
 
     public function index()
     {
+        if(Auth::check())
+        {
         return view('categories.index');
     }
-
+    return redirect('login')->with('success', 'you are not allowed to access');
+}
     public function getCategories(Request $request)
 {
     if ($request->ajax()) {

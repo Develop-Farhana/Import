@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\CategoryController;
@@ -22,14 +23,15 @@ Route::get('/', function () {
 });
 
 // Admin login routes
-Route::get('admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
-Route::post('admin/login', [AuthController::class, 'login']);
-Route::post('admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
-
+// Route::get('admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
+// Route::post('admin/login', [AuthController::class, 'login']);
+// Route::post('admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+Route::get('login', [AdminController::class, 'index'])->name('admin.login');
+Route::post('login', [AdminController::class, 'validate_login'])->name('admin.login.submit');
+Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
 // Admin dashboard routes
-Route::middleware(['auth:admin'])->group(function () {
-    Route::get('admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-});
+
 
 // Route::middleware('auth:admin')->group(function() {
 //     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
