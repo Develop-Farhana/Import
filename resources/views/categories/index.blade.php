@@ -1,31 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories</title>
-    <!-- Include DataTables CSS and JS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-    <!-- Include Bootstrap CSS for better styling (optional) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Categories</h1>
-        <form action="{{ route('categories.import') }}" method="POST" enctype="multipart/form-data" class="mb-3">
-            @csrf
-            <div class="form-group">
-                <input type="file" name="file" required class="form-control-file">
-            </div>
-            <button type="submit" class="btn btn-primary">Import</button>
-        </form>
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        <table id="categories-table" class="display">
-            <thead>
+@extends('includes.layout')
+
+@section('style')
+<!-- Include DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<!-- Include Bootstrap CSS for better styling -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<style>
+    .card-header {
+        background-color: #007bff;
+        color: white;
+    }
+    .btn-import {
+        margin-top: 10px;
+    }
+</style>
+@endsection
+
+@section('content')
+<div class="container mt-5">
+    <h1 class="mb-4">Categories</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Import Categories</h5>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('categories.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="file">Choose CSV File</label>
+                    <input type="file" name="file" id="file" required class="form-control-file">
+                </div>
+                <button type="submit" class="btn btn-success btn-import">Import</button>
+            </form>
+        </div>
+    </div>
+
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    <div class="table-responsive">
+        <table id="categories-table" class="table table-striped table-bordered">
+            <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
@@ -34,31 +53,36 @@
             </thead>
         </table>
     </div>
+</div>
 
-    <!-- Modal for Edit Category -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="editForm" method="POST">
-                        @csrf
-                        @method('PUT') <!-- Use PUT method for update -->
-                        <div class="form-group">
-                            <label for="editName">Name</label>
-                            <input type="text" class="form-control" id="editName" name="name" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </form>
-                </div>
+<!-- Modal for Edit Category -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" method="POST">
+                    @csrf
+                    @method('PUT') <!-- Use PUT method for update -->
+                    <div class="form-group">
+                        <label for="editName">Name</label>
+                        <input type="text" class="form-control" id="editName" name="name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+@endsection
+
+@section('script')
+
 
     <!-- Include jQuery and DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -133,5 +157,4 @@
             });
         });
     </script>
-</body>
-</html>
+@endsection

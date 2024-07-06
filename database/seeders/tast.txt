@@ -1,0 +1,13 @@
+1. Install the latest laravel version
+2. Create Admins table via migration - column(id,'email', 'password',created_at,updated_at)
+3. Create a seeder which will insert and email and password data
+4. Create a auth guard with Admin table
+5. Create a login page, contains email and password columns
+6. create categories table  - column(id,'name')
+7. categories will be imported via excel sheet(.xlsx sheet)
+8. List categories in a datatable, and do the other action like edit,update and delete via ajax
+9. create products tabls - column(id, 'category_id', name, image)
+10. On click of product create a popup will open, which contains name, category name, and image field
+11. do the product edit, update, delete via popup
+12. List the Product in datatable, with product name, category name and image.
+13. All the category and product route must be auth secured.
